@@ -26,23 +26,29 @@
             position: fixed;
             top: 20px;
             right: 20px;
-            background: #1E3A8A;
+            background: linear-gradient(135deg, #1E3A8A 0%, #3B82F6 100%);
             color: white;
             border: none;
-            padding: 15px 30px;
-            border-radius: 8px;
+            padding: 16px 32px;
+            border-radius: 10px;
             font-size: 16px;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 12px rgba(30, 58, 138, 0.4);
             z-index: 1000;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
         }
-        
+
         .print-button:hover {
-            background: #1E40AF;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 8px rgba(0,0,0,0.3);
+            background: linear-gradient(135deg, #1E40AF 0%, #60A5FA 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(30, 58, 138, 0.5);
+        }
+
+        .print-button:active {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(30, 58, 138, 0.4);
         }
         
         .poster {
@@ -105,13 +111,16 @@
             margin-bottom: 3mm;
             letter-spacing: -0.5px;
             line-height: 1.1;
+            text-shadow: 0 2px 4px rgba(30, 58, 138, 0.1);
         }
-        
+
         .subtitle {
             font-size: 16pt;
             color: #4B5563;
             text-align: center;
             margin-bottom: 4mm;
+            font-weight: 600;
+            letter-spacing: 0.3px;
         }
         
         .meta-info {
@@ -147,9 +156,11 @@
         /* Section Styling */
         .section {
             background: #F9FAFB;
-            border-radius: 6px;
+            border-radius: 8px;
             padding: 5mm;
-            border-left: 4px solid #3B82F6;
+            border-left: 5px solid #3B82F6;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s ease;
         }
         
         .section-title {
@@ -163,7 +174,7 @@
         
         .section-content {
             font-size: 10pt;
-            line-height: 1.5;
+            line-height: 1.6;
             color: #374151;
         }
         
@@ -213,11 +224,12 @@
         
         /* Architecture - Center Column - Larger */
         .architecture-section {
-            background: #EFF6FF;
-            border-radius: 8px;
+            background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
+            border-radius: 10px;
             padding: 6mm;
-            border: 3px solid #3B82F6;
+            border: 4px solid #3B82F6;
             height: 100%;
+            box-shadow: 0 4px 8px rgba(59, 130, 246, 0.2);
         }
         
         .architecture-section .section-title {
@@ -376,23 +388,27 @@
         }
         
         .result-box {
-            background: white;
-            padding: 3mm;
-            border-radius: 6px;
+            background: linear-gradient(135deg, #ffffff 0%, #F0F9FF 100%);
+            padding: 4mm;
+            border-radius: 8px;
             text-align: center;
             border: 2px solid #3B82F6;
+            box-shadow: 0 2px 6px rgba(59, 130, 246, 0.15);
+            transition: all 0.2s ease;
         }
-        
+
         .result-value {
-            font-size: 18pt;
+            font-size: 20pt;
             font-weight: 800;
             color: #1E3A8A;
-            margin-bottom: 1mm;
+            margin-bottom: 2mm;
+            line-height: 1;
         }
-        
+
         .result-label {
-            font-size: 8pt;
+            font-size: 8.5pt;
             color: #6B7280;
+            font-weight: 600;
         }
         
         /* Challenges Section - Red */
@@ -424,19 +440,21 @@
         }
         
         .tool-tag {
-            background: white;
-            padding: 2mm;
-            border-radius: 4px;
+            background: linear-gradient(135deg, #ffffff 0%, #EFF6FF 100%);
+            padding: 2.5mm;
+            border-radius: 6px;
             font-size: 9pt;
             font-weight: 600;
             color: #1E3A8A;
             text-align: center;
-            border: 1px solid #DBEAFE;
+            border: 2px solid #DBEAFE;
+            box-shadow: 0 1px 3px rgba(59, 130, 246, 0.1);
+            transition: all 0.2s ease;
         }
         
         /* Footer */
         .footer {
-            background: #1F2937;
+            background: linear-gradient(135deg, #1F2937 0%, #111827 100%);
             color: white;
             padding: 5mm 15mm;
             display: flex;
@@ -444,23 +462,31 @@
             align-items: center;
             font-size: 10pt;
             height: 25mm;
+            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
         }
-        
+
         .footer-left {
             display: flex;
             gap: 5mm;
             align-items: center;
+            line-height: 1.6;
         }
-        
+
         .footer a {
             color: #60A5FA;
             text-decoration: none;
+            transition: color 0.2s ease;
         }
-        
+
+        .footer a:hover {
+            color: #93C5FD;
+        }
+
         .footer-note {
             font-style: italic;
             color: #FCD34D;
-            font-weight: 600;
+            font-weight: 700;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
         }
         
         @media print {
@@ -514,7 +540,7 @@
                 </div>
                 <div class="meta-right">
                     <strong>Domain:</strong> Positioning, Navigation & Timing (PNT)<br>
-                    <strong>Duration:</strong> Internship Program 2024-25<br>
+                    <strong>Duration:</strong> Internship Program 2025<br>
                     <strong>Repository:</strong> 416 commits on GitHub
                 </div>
             </div>
@@ -776,42 +802,68 @@
         </div>
     </div>
     
-    <!-- html2pdf.js library -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <!-- PDF Generation Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
     <script>
-        function downloadPDF() {
-            // Hide the download button before generating PDF
+        async function downloadPDF() {
             const button = document.querySelector('.print-button');
             button.style.display = 'none';
+            button.textContent = '⏳ Generating PDF...';
+            button.style.display = 'block';
 
-            const element = document.querySelector('.poster');
+            try {
+                const element = document.querySelector('.poster');
 
-            const opt = {
-                margin: 0,
-                filename: 'NAVIC_Car_Crash_Detection_Poster_A3.pdf',
-                image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: {
-                    scale: 2,
+                // A3 dimensions in mm: 297mm x 420mm (portrait), we use landscape: 420mm x 297mm
+                const a3WidthMM = 420;
+                const a3HeightMM = 297;
+
+                // Generate high-quality canvas
+                const canvas = await html2canvas(element, {
+                    scale: 3, // Higher scale for better quality
                     useCORS: true,
-                    letterRendering: true,
-                    scrollY: 0,
-                    scrollX: 0
-                },
-                jsPDF: {
+                    allowTaint: false,
+                    backgroundColor: '#ffffff',
+                    logging: false,
+                    width: element.scrollWidth,
+                    height: element.scrollHeight,
+                    windowWidth: element.scrollWidth,
+                    windowHeight: element.scrollHeight
+                });
+
+                // Create PDF with jsPDF
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF({
+                    orientation: 'landscape',
                     unit: 'mm',
                     format: 'a3',
-                    orientation: 'landscape',
                     compress: true
-                },
-                pagebreak: { mode: 'avoid-all' }
-            };
+                });
 
-            // Generate PDF
-            html2pdf().set(opt).from(element).save().then(() => {
-                // Show button again after PDF is generated
-                button.style.display = 'block';
-            });
+                // Calculate dimensions to fit A3
+                const imgWidth = a3WidthMM;
+                const imgHeight = a3HeightMM;
+
+                const imgData = canvas.toDataURL('image/jpeg', 1.0);
+                pdf.addImage(imgData, 'JPEG', 0, 0, imgWidth, imgHeight, '', 'FAST');
+
+                // Save the PDF
+                pdf.save('NAVIC_Car_Crash_Detection_Poster_A3.pdf');
+
+                button.textContent = '✅ PDF Downloaded!';
+                setTimeout(() => {
+                    button.textContent = '📥 Download PDF (A3)';
+                }, 2000);
+
+            } catch (error) {
+                console.error('PDF generation error:', error);
+                button.textContent = '❌ Error! Try again';
+                setTimeout(() => {
+                    button.textContent = '📥 Download PDF (A3)';
+                }, 2000);
+            }
         }
 
         // Alternative: Print function (Ctrl+P)
@@ -829,6 +881,11 @@
                 e.preventDefault();
                 downloadPDF();
             }
+        });
+
+        // Show loading message on page load
+        window.addEventListener('load', function() {
+            console.log('PDF libraries loaded successfully');
         });
     </script>
 </body>
