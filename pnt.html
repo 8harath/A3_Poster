@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NAVIC Car Crash Detection - A3 Poster</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        @page {
+            size: A3 landscape;
+            margin: 0;
+        }
+        
+        body {
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        
+        .print-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #1E3A8A;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            z-index: 1000;
+            transition: all 0.3s;
+        }
+        
+        .print-button:hover {
+            background: #1E40AF;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0,0,0,0.3);
+        }
+        
+        .poster {
+            width: 420mm;
+            height: 297mm;
+            background: white;
+            margin: 0 auto;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Logo Section */
+        .logo-section {
+            height: 35mm;
+            background: linear-gradient(135deg, #1E3A8A 0%, #3B82F6 100%);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 15mm;
+        }
+        
+        .logo-box {
+            width: 100mm;
+            height: 25mm;
+            background: white;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: #1E3A8A;
+            font-size: 12pt;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        
+        .logo-box.center {
+            width: 120mm;
+        }
+        
+        /* Header Section */
+        .header {
+            padding: 8mm 15mm;
+            background: white;
+            border-bottom: 3px solid #3B82F6;
+        }
+        
+        .title {
+            font-size: 48pt;
+            font-weight: 900;
+            color: #1E3A8A;
+            text-align: center;
+            margin-bottom: 3mm;
+            letter-spacing: -0.5px;
+            line-height: 1.1;
+        }
+        
+        .subtitle {
+            font-size: 16pt;
+            color: #4B5563;
+            text-align: center;
+            margin-bottom: 4mm;
+        }
+        
+        .meta-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11pt;
+            color: #374151;
+        }
+        
+        .meta-left, .meta-right {
+            line-height: 1.6;
+        }
+        
+        .meta-left strong, .meta-right strong {
+            color: #1E3A8A;
+        }
+        
+        /* Main Content - 3 Columns */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.3fr 1fr;
+            gap: 8mm;
+            padding: 8mm 15mm;
+            height: calc(297mm - 35mm - 65mm - 25mm);
+        }
+        
+        .column {
+            display: flex;
+            flex-direction: column;
+            gap: 6mm;
+        }
+        
+        /* Section Styling */
+        .section {
+            background: #F9FAFB;
+            border-radius: 6px;
+            padding: 5mm;
+            border-left: 4px solid #3B82F6;
+        }
+        
+        .section-title {
+            font-size: 14pt;
+            font-weight: 700;
+            color: #1E3A8A;
+            margin-bottom: 3mm;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .section-content {
+            font-size: 10pt;
+            line-height: 1.5;
+            color: #374151;
+        }
+        
+        .section-content ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .section-content li {
+            margin-bottom: 2mm;
+            padding-left: 5mm;
+            position: relative;
+        }
+        
+        .section-content li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: #3B82F6;
+            font-weight: bold;
+        }
+        
+        /* Problem Section - Red accent */
+        .section.problem {
+            border-left-color: #DC2626;
+            background: #FEF2F2;
+        }
+        
+        .section.problem .section-title {
+            color: #991B1B;
+        }
+        
+        /* Motivation Section - Orange */
+        .section.motivation {
+            border-left-color: #F59E0B;
+            background: #FFFBEB;
+        }
+        
+        .section.motivation .section-title {
+            color: #92400E;
+        }
+        
+        /* Objectives - Blue */
+        .section.objectives {
+            border-left-color: #3B82F6;
+        }
+        
+        /* Architecture - Center Column - Larger */
+        .architecture-section {
+            background: #EFF6FF;
+            border-radius: 8px;
+            padding: 6mm;
+            border: 3px solid #3B82F6;
+            height: 100%;
+        }
+        
+        .architecture-section .section-title {
+            font-size: 16pt;
+            text-align: center;
+            margin-bottom: 4mm;
+        }
+        
+        .architecture-diagram {
+            background: white;
+            padding: 5mm;
+            border-radius: 6px;
+            margin-bottom: 4mm;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .flow-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 3mm;
+        }
+        
+        .flow-box {
+            flex: 1;
+            background: linear-gradient(135deg, #3B82F6 0%, #60A5FA 100%);
+            color: white;
+            padding: 4mm;
+            border-radius: 6px;
+            text-align: center;
+            font-size: 9pt;
+            font-weight: 600;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            min-height: 20mm;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .flow-box.sensor {
+            background: linear-gradient(135deg, #10B981 0%, #34D399 100%);
+        }
+        
+        .flow-box.esp32 {
+            background: linear-gradient(135deg, #8B5CF6 0%, #A78BFA 100%);
+        }
+        
+        .flow-box.android {
+            background: linear-gradient(135deg, #F59E0B 0%, #FBBF24 100%);
+        }
+        
+        .flow-box.mqtt {
+            background: linear-gradient(135deg, #EF4444 0%, #F87171 100%);
+        }
+        
+        .flow-box .title {
+            font-size: 10pt;
+            font-weight: 700;
+            margin-bottom: 2mm;
+        }
+        
+        .flow-box .desc {
+            font-size: 8pt;
+            opacity: 0.9;
+        }
+        
+        .flow-arrow {
+            font-size: 20pt;
+            color: #3B82F6;
+            font-weight: bold;
+        }
+        
+        .data-flow {
+            background: white;
+            padding: 4mm;
+            border-radius: 6px;
+            margin-bottom: 4mm;
+        }
+        
+        .data-flow-title {
+            font-size: 11pt;
+            font-weight: 700;
+            color: #1E3A8A;
+            margin-bottom: 2mm;
+        }
+        
+        .data-flow-steps {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 8pt;
+        }
+        
+        .data-step {
+            background: #DBEAFE;
+            padding: 2mm 3mm;
+            border-radius: 4px;
+            flex: 1;
+            text-align: center;
+            font-weight: 600;
+            color: #1E40AF;
+        }
+        
+        .data-arrow {
+            margin: 0 2mm;
+            color: #3B82F6;
+            font-weight: bold;
+        }
+        
+        .screenshots-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3mm;
+        }
+        
+        .screenshot-box {
+            background: #E5E7EB;
+            border-radius: 6px;
+            padding: 3mm;
+            text-align: center;
+            aspect-ratio: 9/16;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border: 2px solid #D1D5DB;
+        }
+        
+        .screenshot-box .icon {
+            font-size: 24pt;
+            margin-bottom: 2mm;
+        }
+        
+        .screenshot-box .caption {
+            font-size: 8pt;
+            color: #4B5563;
+            font-weight: 600;
+        }
+        
+        /* Implementation Section - Green */
+        .section.implementation {
+            border-left-color: #10B981;
+            background: #F0FDF4;
+        }
+        
+        .section.implementation .section-title {
+            color: #065F46;
+        }
+        
+        /* Results Section */
+        .results-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3mm;
+            margin-top: 3mm;
+        }
+        
+        .result-box {
+            background: white;
+            padding: 3mm;
+            border-radius: 6px;
+            text-align: center;
+            border: 2px solid #3B82F6;
+        }
+        
+        .result-value {
+            font-size: 18pt;
+            font-weight: 800;
+            color: #1E3A8A;
+            margin-bottom: 1mm;
+        }
+        
+        .result-label {
+            font-size: 8pt;
+            color: #6B7280;
+        }
+        
+        /* Challenges Section - Red */
+        .section.challenges {
+            border-left-color: #DC2626;
+            background: #FEF2F2;
+        }
+        
+        .section.challenges .section-title {
+            color: #991B1B;
+        }
+        
+        /* Future Scope - Purple */
+        .section.future {
+            border-left-color: #8B5CF6;
+            background: #F5F3FF;
+        }
+        
+        .section.future .section-title {
+            color: #5B21B6;
+        }
+        
+        /* Tools Section */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2mm;
+            margin-top: 3mm;
+        }
+        
+        .tool-tag {
+            background: white;
+            padding: 2mm;
+            border-radius: 4px;
+            font-size: 9pt;
+            font-weight: 600;
+            color: #1E3A8A;
+            text-align: center;
+            border: 1px solid #DBEAFE;
+        }
+        
+        /* Footer */
+        .footer {
+            background: #1F2937;
+            color: white;
+            padding: 5mm 15mm;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 10pt;
+            height: 25mm;
+        }
+        
+        .footer-left {
+            display: flex;
+            gap: 5mm;
+            align-items: center;
+        }
+        
+        .footer a {
+            color: #60A5FA;
+            text-decoration: none;
+        }
+        
+        .footer-note {
+            font-style: italic;
+            color: #FCD34D;
+            font-weight: 600;
+        }
+        
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .print-button {
+                display: none;
+            }
+            
+            .poster {
+                box-shadow: none;
+                page-break-after: avoid;
+            }
+            
+            * {
+                print-color-adjust: exact;
+                -webkit-print-color-adjust: exact;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="print-button" onclick="printPoster()">🖨️ Print to PDF (A3)</button>
+    
+    <div class="poster">
+        <!-- Logo Section -->
+        <div class="logo-section">
+            <div class="logo-box">
+                JAIN University<br>SCSIT Logo
+            </div>
+            <div class="logo-box center">
+                STAR PNT Internship<br>IIT Tirupati NiF
+            </div>
+            <div class="logo-box">
+                Department of<br>Science & Technology
+            </div>
+        </div>
+        
+        <!-- Header -->
+        <div class="header">
+            <h1 class="title">NAVIC-BASED CAR CRASH DETECTION SYSTEM</h1>
+            <h2 class="subtitle">Communication Pipeline & Android Prototype</h2>
+            <div class="meta-info">
+                <div class="meta-left">
+                    <strong>Name:</strong> Bharath K (23BCAR0252)<br>
+                    <strong>College:</strong> JAIN (Deemed-to-be University)<br>
+                    <strong>Guides:</strong> Dr. K. Suneetha & Dr. Zion Ramdinthara
+                </div>
+                <div class="meta-right">
+                    <strong>Domain:</strong> Positioning, Navigation & Timing (PNT)<br>
+                    <strong>Duration:</strong> Internship Program 2024-25<br>
+                    <strong>Repository:</strong> 416 commits on GitHub
+                </div>
+            </div>
+        </div>
+        
+        <!-- Main Content Grid -->
+        <div class="content-grid">
+            <!-- LEFT COLUMN -->
+            <div class="column">
+                <!-- Problem Statement -->
+                <div class="section problem">
+                    <div class="section-title">Problem Statement</div>
+                    <div class="section-content">
+                        <ul>
+                            <li>Road traffic accidents require faster automated alert systems</li>
+                            <li>Existing systems rely heavily on manual reporting with fatal delays</li>
+                            <li>Need for low-cost, scalable IoT solutions using NAVIC positioning</li>
+                            <li>150,000+ annual deaths in India due to delayed emergency response</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Motivation -->
+                <div class="section motivation">
+                    <div class="section-title">Motivation</div>
+                    <div class="section-content">
+                        <ul>
+                            <li>India sees high fatality rates during "golden hour"</li>
+                            <li>NAVIC enables region-specific, higher-accuracy location data</li>
+                            <li>IoT allows real-time, lightweight crash detection frameworks</li>
+                            <li>Open-source approach enables widespread adoption</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Objectives -->
+                <div class="section objectives">
+                    <div class="section-title">Project Objectives</div>
+                    <div class="section-content">
+                        <ul>
+                            <li>Build the communication backbone of a crash alert system</li>
+                            <li>Develop Android-based crash alert application</li>
+                            <li>Integrate Bluetooth (ESP32 → Phone)</li>
+                            <li>Validate MQTT pipeline (Phone → Broker → Subscribers)</li>
+                            <li>Prepare for Phase-2 sensor calibration</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Phase 1 Scope -->
+                <div class="section">
+                    <div class="section-title">Phase-1 Deliverables</div>
+                    <div class="section-content">
+                        <ul>
+                            <li>ESP32 → Android Bluetooth integration</li>
+                            <li>Android app → MQTT message publish</li>
+                            <li>Simulated crash event pipeline</li>
+                            <li>Modular system architecture validated</li>
+                            <li>416 commits across repositories</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- CENTER COLUMN - Architecture -->
+            <div class="column">
+                <div class="architecture-section">
+                    <div class="section-title">System Architecture</div>
+                    
+                    <!-- Main Flow Diagram -->
+                    <div class="architecture-diagram">
+                        <div class="flow-container">
+                            <div class="flow-box sensor">
+                                <div class="title">SENSORS</div>
+                                <div class="desc">MPU6050<br>Vibration<br>Bharat Pi</div>
+                            </div>
+                            <div class="flow-arrow">→</div>
+                            <div class="flow-box esp32">
+                                <div class="title">ESP32</div>
+                                <div class="desc">BLE<br>Processing<br>JSON</div>
+                            </div>
+                            <div class="flow-arrow">→</div>
+                            <div class="flow-box android">
+                                <div class="title">ANDROID</div>
+                                <div class="desc">Gateway<br>Publisher<br>Subscriber</div>
+                            </div>
+                            <div class="flow-arrow">→</div>
+                            <div class="flow-box mqtt">
+                                <div class="title">MQTT</div>
+                                <div class="desc">Broker<br>QoS 1<br>Routing</div>
+                            </div>
+                            <div class="flow-arrow">→</div>
+                            <div class="flow-box">
+                                <div class="title">ALERTS</div>
+                                <div class="desc">Emergency<br>Dashboard<br>Logs</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Data Flow -->
+                    <div class="data-flow">
+                        <div class="data-flow-title">Data Flow Pipeline</div>
+                        <div class="data-flow-steps">
+                            <div class="data-step">Sampling</div>
+                            <div class="data-arrow">→</div>
+                            <div class="data-step">Filtering</div>
+                            <div class="data-arrow">→</div>
+                            <div class="data-step">BLE TX</div>
+                            <div class="data-arrow">→</div>
+                            <div class="data-step">MQTT Pub</div>
+                            <div class="data-arrow">→</div>
+                            <div class="data-step">Broker</div>
+                            <div class="data-arrow">→</div>
+                            <div class="data-step">Subscribers</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Key Features -->
+                    <div class="data-flow">
+                        <div class="data-flow-title">Key Architecture Features</div>
+                        <div class="section-content" style="font-size: 9pt;">
+                            <ul>
+                                <li>JSON-based message format for interoperability</li>
+                                <li>Modular design - components independently testable</li>
+                                <li>NAVIC data slot reserved for positioning</li>
+                                <li>Dual-mode Android: Publisher + Subscriber</li>
+                                <li>QoS 1 ensures at-least-once delivery</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Android App Screenshots -->
+                    <div class="data-flow">
+                        <div class="data-flow-title">Android Application Screens</div>
+                        <div class="screenshots-grid">
+                            <div class="screenshot-box">
+                                <div class="icon">🏠</div>
+                                <div class="caption">Home Screen<br>Connection Status</div>
+                            </div>
+                            <div class="screenshot-box">
+                                <div class="icon">🚨</div>
+                                <div class="caption">Crash Alert<br>Simulation</div>
+                            </div>
+                            <div class="screenshot-box">
+                                <div class="icon">📡</div>
+                                <div class="caption">MQTT Status<br>Monitoring</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- RIGHT COLUMN -->
+            <div class="column">
+                <!-- Implementation -->
+                <div class="section implementation">
+                    <div class="section-title">Implementation Summary</div>
+                    <div class="section-content">
+                        <ul>
+                            <li>Complete Android app (Kotlin, 416 commits)</li>
+                            <li>Bluetooth-based ESP32 communication</li>
+                            <li>MQTT integration (Paho client library)</li>
+                            <li>Mosquitto broker configuration & testing</li>
+                            <li>JSON-based alert payload structure</li>
+                            <li>Simulation framework for testing</li>
+                            <li>Modular architecture validated</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Results -->
+                <div class="section">
+                    <div class="section-title">Results Obtained</div>
+                    <div class="section-content">
+                        <div class="results-grid">
+                            <div class="result-box">
+                                <div class="result-value">100%</div>
+                                <div class="result-label">Message Delivery</div>
+                            </div>
+                            <div class="result-box">
+                                <div class="result-value">276ms</div>
+                                <div class="result-label">Avg Latency</div>
+                            </div>
+                            <div class="result-box">
+                                <div class="result-value">50</div>
+                                <div class="result-label">Concurrent Tests</div>
+                            </div>
+                            <div class="result-box">
+                                <div class="result-value">94%</div>
+                                <div class="result-label">Auto-Reconnect</div>
+                            </div>
+                        </div>
+                        <ul style="margin-top: 3mm;">
+                            <li>Instant message propagation verified</li>
+                            <li>Alert workflow with simulated triggers</li>
+                            <li>Sensor-independent validation complete</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Challenges -->
+                <div class="section challenges">
+                    <div class="section-title">Challenges & Observations</div>
+                    <div class="section-content">
+                        <ul>
+                            <li>Vibration sensor sensitivity insufficient for 1:20 RC car</li>
+                            <li>High noise floor from motor interference</li>
+                            <li>Indoor GPS signal attenuation (20-30dB loss)</li>
+                            <li>Scale physics mismatch: 0.5-1J vs 10-100J required</li>
+                            <li><strong>Strategic pivot: Validated software layer independently</strong></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Future Scope -->
+                <div class="section future">
+                    <div class="section-title">Future Scope (Phase-2)</div>
+                    <div class="section-content">
+                        <ul>
+                            <li>High-sensitivity MEMS accelerometer (ADXL355/357)</li>
+                            <li>Threshold tuning & field validation</li>
+                            <li>NAVIC module integration for real coordinates</li>
+                            <li>TinyML-based crash classification (&lt;50ms inference)</li>
+                            <li>Subscriber dashboard with live map</li>
+                            <li>200-500 labeled crash dataset collection</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Tools & Technologies -->
+                <div class="section">
+                    <div class="section-title">Tools & Technologies</div>
+                    <div class="tools-grid">
+                        <div class="tool-tag">ESP32 DevKitC</div>
+                        <div class="tool-tag">MPU6050 IMU</div>
+                        <div class="tool-tag">Android Studio</div>
+                        <div class="tool-tag">Kotlin Language</div>
+                        <div class="tool-tag">Mosquitto MQTT</div>
+                        <div class="tool-tag">Bluetooth LE</div>
+                        <div class="tool-tag">JSON Messaging</div>
+                        <div class="tool-tag">NAVIC-Ready</div>
+                        <div class="tool-tag">Paho Library</div>
+                        <div class="tool-tag">Python Simulation</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer">
+            <div class="footer-left">
+                <span><strong>Contact:</strong> bharath.k@jainuniversity.ac.in</span>
+                <span>|</span>
+                <span><strong>GitHub:</strong> <a href="#">github.com/8harath/Car_Crash_Detection</a></span>
+            </div>
+            <div class="footer-note">
+                Phase-1 Prototype Validated – Ready for Sensor Integration
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function printPoster() {
+            // Set print styles
+            const style = document.createElement('style');
+            style.textContent = `
+                @media print {
+                    @page {
+                        size: A3 landscape;
+                        margin: 0;
+                    }
+                    body {
+                        margin: 0;
+                        padding: 0;
+                    }
+                    .print-button {
+                        display: none !important;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            // Trigger print dialog
+            window.print();
+            
+            // Instructions for PDF save
+            alert('Print Settings:\n\n1. Destination: Save as PDF\n2. Layout: Landscape\n3. Paper Size: A3\n4. Margins: None\n5. Background Graphics: ON\n\nClick Print/Save to generate PDF');
+        }
+        
+        // Keyboard shortcut
+        document.addEventListener('keydown', function(e) {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'p') {
+                e.preventDefault();
+                printPoster();
+            }
+        });
+    </script>
+</body>
+</html>
